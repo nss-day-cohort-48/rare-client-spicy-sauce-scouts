@@ -5,22 +5,20 @@ import "./Auth.css"
 export const Register = (props) => {
     const firstName = useRef()
     const lastName = useRef()
+    const displayName = useRef()
     const email = useRef()
-    const bio = useRef()
-    const password = useRef()
-    const verifyPassword = useRef()
-    const passwordDialog = useRef()
+    const verifyEmail = useRef()
+    const emailDialog = useRef()
 
     const handleRegister = (e) => {
         e.preventDefault()
 
-        if (password.current.value === verifyPassword.current.value) {
+        if (email.current.value === verifyemail.current.value) {
             const newUser = {
-                "username": email.current.value,
                 "first_name": firstName.current.value,
                 "last_name": lastName.current.value,
+                "display_name": displayName.current.value,
                 "email": email.current.value,
-                "password": password.current.value
             }
 
             return fetch("http://127.0.0.1:8088/register", {
@@ -39,16 +37,16 @@ export const Register = (props) => {
                     }
                 })
         } else {
-            passwordDialog.current.showModal()
+            emailDialog.current.showModal()
         }
     }
 
     return (
         <main style={{ textAlign: "center" }}>
 
-            <dialog className="dialog dialog--password" ref={passwordDialog}>
+            <dialog className="dialog dialog--email" ref={emailDialog}>
                 <div>Passwords do not match</div>
-                <button className="button--close" onClick={e => passwordDialog.current.close()}>Close</button>
+                <button className="button--close" onClick={e => emailDialog.current.close()}>Close</button>
             </dialog>
 
             <form className="form--login" onSubmit={handleRegister}>
@@ -66,12 +64,12 @@ export const Register = (props) => {
                     <input ref={email} type="email" name="email" className="form-control" placeholder="Email address" required />
                 </fieldset>
                 <fieldset>
-                    <label htmlFor="inputPassword"> Password </label>
-                    <input ref={password} type="password" name="password" className="form-control" placeholder="Password" required />
+                    <label htmlFor="inputDisplayName"> Display Name </label>
+                    <input ref={displayName} type="text" name="displayName" className="form-control" placeholder="Display Name" required />
                 </fieldset>
                 <fieldset>
-                    <label htmlFor="verifyPassword"> Verify Password </label>
-                    <input ref={verifyPassword} type="password" name="verifyPassword" className="form-control" placeholder="Verify password" required />
+                    <label htmlFor="verifyEmail"> Verify Email </label>
+                    <input ref={verifyEmail} type="password" name="verifyEmail" className="form-control" placeholder="Verify Email" required />
                 </fieldset>
                 <fieldset style={{
                     textAlign: "center"
