@@ -13,7 +13,7 @@ export const Register = (props) => {
     const handleRegister = (e) => {
         e.preventDefault()
 
-        if (email.current.value === verifyemail.current.value) {
+        if (email.current.value === verifyEmail.current.value) {
             const newUser = {
                 "first_name": firstName.current.value,
                 "last_name": lastName.current.value,
