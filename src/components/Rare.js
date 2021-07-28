@@ -5,6 +5,8 @@ import { NavBar } from "./nav/NavBar"
 import { Login } from "./auth/Login"
 import { Register } from "./auth/Register"
 import {Profile} from "./auth/Profile"
+import {ProfileProvider} from "./auth/AuthProvider"
+
 
 export const Rare = () => (
     <>
@@ -26,6 +28,7 @@ export const Rare = () => (
                 return <Login />
             }
         }} />
+        <ProfileProvider>
         <Route path="/Profile" render={() => {
             if (localStorage.getItem("rare_user_id")) {
                 return <Profile/>
@@ -33,7 +36,7 @@ export const Rare = () => (
                 return <Redirect to="/" />
             }
         }} />
-
+            </ProfileProvider>
         <Route path="/register" render={() => {
             if (localStorage.getItem("rare_user_id")) {
                 return <Redirect to="/" />

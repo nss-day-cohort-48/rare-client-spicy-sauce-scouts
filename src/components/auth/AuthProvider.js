@@ -1,23 +1,26 @@
-import React, { useState } from "react"
+import React, { useState,createContext } from "react"
 
-export const ProfileContext = React.createContext()
+export const ProfileContext = createContext()
 
 export const ProfileProvider = (props) => {
-    const [profile, setProfile] = useState({events:[]})
+    const [Users, setUsers] = useState([])
+    const [CurrentUser ,setCurrentUser] = useState([])
 
-    const getProfile = () => {
-        return fetch("http://localhost:8000/profile", {
-            headers: {
-                "Authorization": `Token ${localStorage.getItem("lu_token")}`
-            }
-        })
-            .then(response => response.json())
-            .then(setProfile)
+    const getUsers = () => {
+        return fetch("http://localhost:8088/users")
+            .then(res => res.json())
+            .then(setUsers)
+    }
+
+    const getUserById = (id) => {
+        return fetch(`http://localhost:8088/users/${id}`)
+            .then(res => res.json())
+            .then(setCurrentUser)
     }
 
     return (
         <ProfileContext.Provider value={{
-            profile, getProfile
+            Users, CurrentUser, getUsers, getUserById
         }}>
             {props.children}
         </ProfileContext.Provider>
