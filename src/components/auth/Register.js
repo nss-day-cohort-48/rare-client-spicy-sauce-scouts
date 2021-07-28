@@ -1,24 +1,29 @@
 import React, { useRef } from "react"
-import { Link } from "react-router-dom"
+import { Link, useHistory } from "react-router-dom"
 import "./Auth.css"
 
 export const Register = (props) => {
     const firstName = useRef()
     const lastName = useRef()
-    const displayName = useRef()
     const email = useRef()
-    const verifyEmail = useRef()
-    const emailDialog = useRef()
+    const bio = useRef()
+    const password = useRef()
+    const verifyPassword = useRef()
+    const passwordDialog = useRef()
+    const history = useHistory()
 
     const handleRegister = (e) => {
         e.preventDefault()
 
-        if (email.current.value === verifyEmail.current.value) {
+        if (password.current.value === verifyPassword.current.value) {
             const newUser = {
+                "username": email.current.value,
                 "first_name": firstName.current.value,
                 "last_name": lastName.current.value,
-                "display_name": displayName.current.value,
                 "email": email.current.value,
+                "password": password.current.value,
+                "bio": "",
+                "profile_image_url": "",
             }
 
             return fetch("http://127.0.0.1:8088/register", {
@@ -31,22 +36,22 @@ export const Register = (props) => {
             })
                 .then(res => res.json())
                 .then(res => {
-                    if ("valid" in res && res.valid) {
-                        localStorage.setItem("rare_user_id", res.token)
-                        props.history.push("/")
+                    if ("active" in res && res.active) {
+                        localStorage.setItem("rare_user_id", res.id)
+                        history.push("/")
                     }
                 })
         } else {
-            emailDialog.current.showModal()
+            passwordDialog.current.showModal()
         }
     }
 
     return (
         <main style={{ textAlign: "center" }}>
 
-            <dialog className="dialog dialog--email" ref={emailDialog}>
+            <dialog className="dialog dialog--password" ref={passwordDialog}>
                 <div>Passwords do not match</div>
-                <button className="button--close" onClick={e => emailDialog.current.close()}>Close</button>
+                <button className="button--close" onClick={e => passwordDialog.current.close()}>Close</button>
             </dialog>
 
             <form className="form--login" onSubmit={handleRegister}>
@@ -60,12 +65,16 @@ export const Register = (props) => {
                     <input ref={lastName} type="text" name="lastName" className="form-control" placeholder="Last name" required />
                 </fieldset>
                 <fieldset>
-                    <label htmlFor="inputDisplayName"> Display Name </label>
-                    <input ref={displayName} type="text" name="displayName" className="form-control" placeholder="Display Name" required />
-                </fieldset>
-                <fieldset>
                     <label htmlFor="inputEmail"> Email address </label>
                     <input ref={email} type="email" name="email" className="form-control" placeholder="Email address" required />
+                </fieldset>
+                <fieldset>
+                    <label htmlFor="inputPassword"> Password </label>
+                    <input ref={password} type="password" name="password" className="form-control" placeholder="Password" required />
+                </fieldset>
+                <fieldset>
+                    <label htmlFor="verifyPassword"> Verify Password </label>
+                    <input ref={verifyPassword} type="password" name="verifyPassword" className="form-control" placeholder="Verify password" required />
                 </fieldset>
                 <fieldset style={{
                     textAlign: "center"
