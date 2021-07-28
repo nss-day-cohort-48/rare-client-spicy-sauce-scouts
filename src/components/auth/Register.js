@@ -1,5 +1,5 @@
 import React, { useRef } from "react"
-import { Link } from "react-router-dom"
+import { Link, useHistory } from "react-router-dom"
 import "./Auth.css"
 
 export const Register = (props) => {
@@ -10,6 +10,7 @@ export const Register = (props) => {
     const password = useRef()
     const verifyPassword = useRef()
     const passwordDialog = useRef()
+    const history = useHistory()
 
     const handleRegister = (e) => {
         e.preventDefault()
@@ -20,7 +21,9 @@ export const Register = (props) => {
                 "first_name": firstName.current.value,
                 "last_name": lastName.current.value,
                 "email": email.current.value,
-                "password": password.current.value
+                "password": password.current.value,
+                "bio": "",
+                "profile_image_url": "",
             }
 
             return fetch("http://127.0.0.1:8088/register", {
@@ -33,9 +36,9 @@ export const Register = (props) => {
             })
                 .then(res => res.json())
                 .then(res => {
-                    if ("valid" in res && res.valid) {
-                        localStorage.setItem("rare_user_id", res.token)
-                        props.history.push("/")
+                    if ("active" in res && res.active) {
+                        localStorage.setItem("rare_user_id", res.id)
+                        history.push("/")
                     }
                 })
         } else {
