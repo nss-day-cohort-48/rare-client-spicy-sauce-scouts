@@ -18,9 +18,20 @@ export const ProfileProvider = (props) => {
             .then(setPostsBySubscripton)
     }
 
+    const deletePost = postId => {
+        return fetch(`http://localhost:8088/posts/${postId}`, {
+            methodL: "DELETE"
+        })
+        .then(getPosts)
+    }
+
     return (
         <PostContext.Provider value={{
-            Posts, getPosts , setPostsBySubscripton
+            Posts, getPosts,
+            setPosts,
+            getPostsBySubscripton,
+            setPostsBySubscripton,
+            deletePost 
         }}>
             {props.children}
         </PostContext.Provider>
