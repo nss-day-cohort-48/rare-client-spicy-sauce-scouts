@@ -25,13 +25,27 @@ export const ProfileProvider = (props) => {
         .then(getPosts)
     }
 
+    const updatePost = postObj => {
+        return fetch(`http://localhost:8088/posts/${postObj.id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(postObj)
+        })
+        .then(getPosts)
+    }
+
+
+
     return (
         <PostContext.Provider value={{
             Posts, getPosts,
             setPosts,
             getPostsBySubscripton,
             setPostsBySubscripton,
-            deletePost 
+            deletePost,
+            updatePost
         }}>
             {props.children}
         </PostContext.Provider>
