@@ -58,7 +58,8 @@ export const PostProvider = (props) => {
             getPostsBySubscripton,
             setPostsBySubscripton,
             deletePost,
-            updatePost
+            updatePost,
+            addPost
         }}>
             {props.children}
         </PostContext.Provider>

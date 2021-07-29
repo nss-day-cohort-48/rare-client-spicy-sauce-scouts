@@ -8,6 +8,7 @@ import { Profile } from "./auth/Profile"
 import { ProfileProvider } from "./auth/AuthProvider"
 import {Post} from "./Posts/Post"
 import {PostProvider} from "./Posts/PostProvider"
+import { CategoryProvider } from "./Categories/CategoryProvider" 
 
 export const Rare = () => (
     <>
@@ -29,6 +30,8 @@ export const Rare = () => (
                 return <Login />
             }
         }} />
+        <ProfileProvider>
+        <CategoryProvider>
         <PostProvider>
         <Route path="/Posts" render={() => {
             if (localStorage.getItem("rare_user_id")) {
@@ -39,15 +42,16 @@ export const Rare = () => (
                 return <Redirect to="/" />
             }
         }} />
-        </PostProvider>
-        <ProfileProvider>
+
             <Route path="/Profile" render={() => {
                 if (localStorage.getItem("rare_user_id")) {
                     return <Profile />
                 } else {
                     return <Redirect to="/" />
                 }
-            }} />
+            }} /> 
+        </PostProvider>
+        </CategoryProvider>
         </ProfileProvider>
         <Route path="/register" render={() => {
             if (localStorage.getItem("rare_user_id")) {
