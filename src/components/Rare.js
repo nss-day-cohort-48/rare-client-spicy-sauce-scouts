@@ -4,9 +4,10 @@ import { ApplicationViews } from "./ApplicationViews"
 import { NavBar } from "./nav/NavBar"
 import { Login } from "./auth/Login"
 import { Register } from "./auth/Register"
-import {Profile} from "./auth/Profile"
-import {ProfileProvider} from "./auth/AuthProvider"
-
+import { Profile } from "./auth/Profile"
+import { ProfileProvider } from "./auth/AuthProvider"
+import {Post} from "./Posts/Post"
+import {PostProvider} from "./Posts/PostProvider"
 
 export const Rare = () => (
     <>
@@ -28,15 +29,26 @@ export const Rare = () => (
                 return <Login />
             }
         }} />
-        <ProfileProvider>
-        <Route path="/Profile" render={() => {
+        <PostProvider>
+        <Route path="/Posts" render={() => {
             if (localStorage.getItem("rare_user_id")) {
-                return <Profile/>
+                return <>
+                   <Post/>
+                </>
             } else {
                 return <Redirect to="/" />
             }
         }} />
-            </ProfileProvider>
+        </PostProvider>
+        <ProfileProvider>
+            <Route path="/Profile" render={() => {
+                if (localStorage.getItem("rare_user_id")) {
+                    return <Profile />
+                } else {
+                    return <Redirect to="/" />
+                }
+            }} />
+        </ProfileProvider>
         <Route path="/register" render={() => {
             if (localStorage.getItem("rare_user_id")) {
                 return <Redirect to="/" />
