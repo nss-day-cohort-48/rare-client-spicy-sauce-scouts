@@ -5,6 +5,19 @@ export const PostContext = createContext()
 export const PostProvider = (props) => {
     const [Posts, setPosts] = useState([])
 
+    const userId = localStorage.getItem("rare_user_id")
+
+    const addPost = post => {
+        return fetch("http://localhost:8088/posts", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(post)
+        })
+        .then(response => response.json())
+    }
+
     const getPosts = () => {
         return fetch("http://localhost:8088/posts")
             .then(res => res.json())
@@ -17,9 +30,34 @@ export const PostProvider = (props) => {
     //         .then(setPostsBySubscripton)
     // }
 
+    const deletePost = postId => {
+        return fetch(`http://localhost:8088/posts/${postId}`, {
+            methodL: "DELETE"
+        })
+        .then(getPosts)
+    }
+
+    const updatePost = postObj => {
+        return fetch(`http://localhost:8088/posts/${postObj.id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(postObj)
+        })
+        .then(getPosts)
+    }
+
+
+
     return (
         <PostContext.Provider value={{
-            Posts, getPosts , 
+            Posts, getPosts,
+            setPosts,
+            getPostsBySubscripton,
+            setPostsBySubscripton,
+            deletePost,
+            updatePost
         }}>
             {props.children}
         </PostContext.Provider>
