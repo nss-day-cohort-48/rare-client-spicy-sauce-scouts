@@ -6,6 +6,19 @@ export const ProfileProvider = (props) => {
     const [Posts, setPosts] = useState([])
     const [Posts, setPostsBySubscripton] = useState([])
 
+    const userId = localStorage.getItem("rare_user_id")
+
+    const addPost = post => {
+        return fetch("http://localhost:8088/posts", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(post)
+        })
+        .then(response => response.json())
+    }
+
     const getPosts = () => {
         return fetch("http://localhost:8088/posts")
             .then(res => res.json())
