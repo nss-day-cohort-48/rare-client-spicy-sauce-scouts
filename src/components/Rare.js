@@ -9,6 +9,8 @@ import { ProfileProvider } from "./auth/AuthProvider"
 import {Post} from "./Posts/Post"
 import {PostProvider} from "./Posts/PostProvider"
 import { CategoryProvider } from "./Categories/CategoryProvider" 
+import {CommentProvider} from "./Comments/CommentProvider"
+import { TagProvider } from "./Tags/TagProvider" 
 
 export const Rare = () => (
     <>
@@ -30,6 +32,8 @@ export const Rare = () => (
                 return <Login />
             }
         }} />
+        <TagProvider>
+        <CommentProvider>
         <ProfileProvider>
         <CategoryProvider>
         <PostProvider>
@@ -53,6 +57,8 @@ export const Rare = () => (
         </PostProvider>
         </CategoryProvider>
         </ProfileProvider>
+        </CommentProvider>
+        </TagProvider>
         <Route path="/register" render={() => {
             if (localStorage.getItem("rare_user_id")) {
                 return <Redirect to="/" />
