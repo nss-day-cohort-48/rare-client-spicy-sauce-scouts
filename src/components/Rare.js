@@ -89,16 +89,6 @@ export const Rare = () => (
             }
             }}
           />
-          <Route exact path="/Posts" render={() => {
-            if (localStorage.getItem("rare_user_id")) {
-                return <>
-                   <Post/>
-                </>
-            } else {
-                return <Redirect to="/" />
-            }
-        }} />
-
           <Route
             exact
             path="/Profile"
