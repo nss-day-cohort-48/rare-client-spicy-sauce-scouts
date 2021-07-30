@@ -2,10 +2,11 @@ import React, { useContext, useEffect, useState } from "react"
 import { PostContext } from "./PostProvider"
 import { useHistory } from 'react-router-dom';
 import "../auth/Profile.css"
+import {handleSavePost} from "./CreatePost"
 
 
-export const UserPost = () => {
-    const { Posts, getPosts, deletePost } = useContext(PostContext)
+export const UserPost = ({incomingPost}) => {
+    const { Posts, getPosts, deletePost, updatePost, addPost } = useContext(PostContext)
     const [filteredposts, setFiltered] = useState([])
     const [post, setPosts] = useState({})
     const [currentUser, setCurrentUser] = useState({})
@@ -48,7 +49,36 @@ export const UserPost = () => {
         deletePost(postId)
     }
 
+    const update = (postId) => {
+        updatePost(postId)
 
+    }
+
+    const handleSavePost = () => {
+        if (incomingPost.id) {
+          updatePost({
+            id: post.id,
+            message: post.title,
+            date: post.publication_date,
+            content:post.content,
+            image:<img src={post.image_url}/>,
+            tags: post.tags,
+            userId: userId
+          })
+          history.push("/posts")
+        } else {
+          addPost({
+            id: post.id,
+            message: post.title,
+            date: post.publication_date,
+            content:post.content,
+            image:<img src={post.image_url}/>,
+            tags: post.tags,
+            userId: userId
+          })
+            .then(() => history.push("/posts"))
+        }
+      }
     // renders the html for the Posts table, add new post button and post form modal.
     return (
         <>
@@ -67,12 +97,14 @@ export const UserPost = () => {
                                         <div>{post.content}</div>
                                         <div>{post.title}</div>
                                         <div><img src={post.image_url}/></div>
-                                    <button>EDIT</button>
+                                    <button onClick={ () => {
+                                        update(post.id)
+                                    }}>EDIT</button>
                                     <button onClick={ () => {
                                         releasePost(post.id)
                                     }
                                     }>DELETE</button>
-                                    
+
                                     </div>
                                 )
                             })

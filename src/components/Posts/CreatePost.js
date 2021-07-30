@@ -4,13 +4,14 @@ import { useHistory } from "react-router-dom";
 import {CategoryContext} from "../Categories/CategoryProvider"
 import {TagContext} from "../Tags/TagProvider"
 
-export const Createpost = () => {
-  const { getPosts, addPost } = useContext(PostContext)
+export const Createpost = ({incomingPost}) => {
+  const { getPosts, addPost, updatePost, getPostById } = useContext(PostContext)
+  // const { post, setPosts} = useState({})
   const { Categories,getCategories} = useContext(CategoryContext)
   const { Tags, getTags} = useContext(TagContext)
   const userId = localStorage.getItem('rare_user_id');
   const history = useHistory();
-  const [Posts, setPosts] = useState({
+  const [post, setPosts] = useState({
     user_id: 0,
     category_id:0,
     title: "",
@@ -29,12 +30,20 @@ export const Createpost = () => {
   useEffect(() => {
     getTags()
   }, []);
+  useEffect(()=> {
+    if(incomingPost.id) {
+      getPostById(incomingPost.id)
+      .then(p => {
+        setPosts(p)
+      })
+    }
+  })
 
 
 
   const handleControlledInputChange = (event) => {
     //making a new post
-    const newPost = { ...Posts };
+    const newPost = { ...post };
 
     newPost[event.target.id] = event.target.value;
     
@@ -42,25 +51,51 @@ export const Createpost = () => {
   };
   //if user is signed in 
   if (userId > 0) {
-    Posts.user_id = parseInt(localStorage.getItem('rare_user_id'));
+    post.user_id = parseInt(localStorage.getItem('rare_user_id'));
   }
 
-  const handleClickSavePost = (event) => {
-    event.preventDefault();
-    var today = new Date();
-    var dd = String(today.getDate()).padStart(2, '0');
-    var mm = String(today.getMonth() + 1).padStart(2, '0'); 
-    var yyyy = today.getFullYear();
-    today = mm + '/' + dd + '/' + yyyy;
-    Posts.publication_date = today;
+  // const handleClickSavePost = (event) => {
+  //   event.preventDefault();
+  //   var today = new Date();
+  //   var dd = String(today.getDate()).padStart(2, '0');
+  //   var mm = String(today.getMonth() + 1).padStart(2, '0'); 
+  //   var yyyy = today.getFullYear();
+  //   today = mm + '/' + dd + '/' + yyyy;
+  //   Posts.publication_date = today;
 
-    //checking to see if the user has input a latitude
-    if (Posts.name === "") {
-      window.alert("Please select a location and a customer");
+  //   //checking to see if the user has input a latitude
+  //   if (Posts.name === "") {
+  //     window.alert("Please select a location and a customer");
+  //   } else {
+  //     addPost(Posts).then(() => history.push("/"));
+  //   }
+  // };
+
+  const handleSavePost = () => {
+    if (incomingPost.id) {
+      updatePost({
+        id: post.id,
+        message: post.title,
+        date: post.publication_date,
+        content:post.content,
+        image:<img src={post.image_url}/>,
+        tags: post.tags,
+        userId: userId
+      })
+      history.push("/posts")
     } else {
-      addPost(Posts).then(() => history.push("/"));
+      addPost({
+        id: post.id,
+        message: post.title,
+        date: post.publication_date,
+        content:post.content,
+        image:<img src={post.image_url}/>,
+        tags: post.tags,
+        userId: userId
+      })
+        .then(() => history.push("/posts"))
     }
-  };
+  }
 
   //render the from to make new posts
   return (
@@ -76,7 +111,7 @@ export const Createpost = () => {
               autoFocus
               className="form-control"
               placeholder="title"
-              value={Posts.title}
+              value={post.title}
               onChange={handleControlledInputChange}
             />
           </div>
@@ -91,7 +126,7 @@ export const Createpost = () => {
               autoFocus
               className="form-control"
               placeholder="image_url"
-              value={Posts.image_url}
+              value={post.image_url}
               onChange={handleControlledInputChange}
             />
           </div>
@@ -106,7 +141,7 @@ export const Createpost = () => {
               autoFocus
               className="form-control"
               placeholder="content"
-              value={Posts.content}
+              value={post.content}
               onChange={handleControlledInputChange}
             />
           </div>
@@ -147,7 +182,7 @@ export const Createpost = () => {
           })}
 
         </fieldset>
-        <button className="btn btn-primary" onClick={handleClickSavePost}>  Submit </button>
+        <button className="btn btn-primary" onClick={handleSavePost}>  Submit </button>
       </form>)
 
 
