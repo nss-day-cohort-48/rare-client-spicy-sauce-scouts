@@ -1,14 +1,14 @@
 import React, { useState,createContext } from "react"
 
-export const PostContext = createContext()
+export const CommentContext = createContext()
 
-export const PostProvider = (props) => {
+export const CommentProvider = (props) => {
     const [Comments, setComments] = useState([])
 
     const userId = localStorage.getItem("rare_user_id")
 
     const addComment = Comment => {
-        return fetch("http://localhost:8088/Comments", {
+        return fetch("http://localhost:8088/comments", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -19,7 +19,7 @@ export const PostProvider = (props) => {
     }
 
     const getComments = () => {
-        return fetch("http://localhost:8088/Comments")
+        return fetch("http://localhost:8088/comments")
             .then(res => res.json())
             .then(setComments)
     }
@@ -47,9 +47,10 @@ export const PostProvider = (props) => {
     return (
         <CommentContext.Provider value={{
             Comments, getComments,
-            setPosts,
+            setComments,
             deleteComment,
-            updateComment
+            updateComment,
+            addComment
         }}>
             {props.children}
         </CommentContext.Provider>
