@@ -7,6 +7,7 @@ import { Register } from "./auth/Register"
 import { Profile } from "./auth/Profile"
 import { ProfileProvider } from "./auth/AuthProvider"
 import {Post} from "./Posts/Post"
+import {PostSearch} from "./Posts/PostSearch"
 import {PostProvider} from "./Posts/PostProvider"
 import { CategoryProvider } from "./Categories/CategoryProvider" 
 import {CommentProvider} from "./Comments/CommentProvider"
@@ -40,6 +41,7 @@ export const Rare = () => (
         <Route path="/Posts" render={() => {
             if (localStorage.getItem("rare_user_id")) {
                 return <>
+                    <PostSearch/>
                    <Post/>
                 </>
             } else {
