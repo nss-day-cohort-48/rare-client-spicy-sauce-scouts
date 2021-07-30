@@ -4,17 +4,14 @@ import { Createpost } from "./CreatePost"
 import "./Post.css"
 import { Comment } from "../Comments/CommentList"
 import { CreateComment } from "../Comments/CreateComment"
+import { useHistory } from "react-router-dom"
+// import {Comment} from "../Comments/CommentList"
+// import {CreateComment} from "../Comments/CreateComment"
 
 export const Post = () => {
     const { Posts, getPosts, searchTerms } = useContext(PostContext)
-    const [filteredPosts, setFiltered ] = useState([])
-import { useHistory } from "react-router-dom"
-import {Comment} from "../Comments/CommentList"
-import {CreateComment} from "../Comments/CreateComment"
-
-export const Post = () => {
-    const { Posts, getPosts } = useContext(PostContext)
     const history = useHistory()
+    const [filteredPosts, setFiltered] = useState([])
 
     const Currentuser = parseInt(localStorage.getItem("rare_user_id"))
 
@@ -37,7 +34,6 @@ export const Post = () => {
 
     return (
         <>
-            <Createpost />
             <section className="Section__Post">
                 {
                     filteredPosts.map(post => {
