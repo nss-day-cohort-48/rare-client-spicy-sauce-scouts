@@ -1,10 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import { PostContext } from "./PostProvider";
 import { useHistory } from "react-router-dom";
+import {CategoryContext} from "../Categories/CategoryProvider"
 
 export const Createpost = () => {
   const { getPosts, addPost } = useContext(PostContext)
-  const userId = localStorage.getItem('poop_usr');
+  const { Categories,getCategories} = useContext(CategoryContext)
+  const userId = localStorage.getItem('rare_user_id');
   const history = useHistory();
   const [Posts, setPosts] = useState({
     user_id: 0,
@@ -13,11 +15,16 @@ export const Createpost = () => {
     publication_date: 0,
     content: "",
     image_url:"",
-    approved:""
+    tags:[],
+    approved:"TRUE"
   });
   useEffect(() => {
     getPosts()
   }, []);
+  useEffect(() => {
+    getCategories()
+  }, []);
+
 
 
   const handleControlledInputChange = (event) => {
@@ -25,16 +32,22 @@ export const Createpost = () => {
     const newPost = { ...Posts };
 
     newPost[event.target.id] = event.target.value;
-
+    
     setPosts(newPost);
   };
   //if user is signed in 
   if (userId > 0) {
-    Posts.user_id = parseInt(localStorage.getItem('rare_usr_id'));
+    Posts.user_id = parseInt(localStorage.getItem('rare_user_id'));
   }
 
-  const handleClickSaveAnimal = (event) => {
+  const handleClickSavePost = (event) => {
     event.preventDefault();
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); 
+    var yyyy = today.getFullYear();
+    today = mm + '/' + dd + '/' + yyyy;
+    Posts.publication_date = today;
 
     //checking to see if the user has input a latitude
     if (Posts.name === "") {
@@ -65,50 +78,53 @@ export const Createpost = () => {
         </fieldset>
         <fieldset>
           <div className="form-group">
-            <label htmlFor="description">Description:</label>
+            <label htmlFor="image_url">image_url:</label>
             <input
               type="text"
-              id="description"
+              id="image_url"
               required
               autoFocus
               className="form-control"
-              placeholder="description"
-              value={Posts.description}
+              placeholder="image_url"
+              value={Posts.image_url}
               onChange={handleControlledInputChange}
             />
           </div>
         </fieldset>
         <fieldset>
           <div className="form-group">
-            <label htmlFor="latitude">Latitude:</label>
+            <label htmlFor="content">content:</label>
             <input
               type="text"
-              id="latitude"
+              id="content"
               required
               autoFocus
               className="form-control"
-              placeholder="latitude"
-              value={Posts.latitude}
+              placeholder="content"
+              value={Posts.content}
               onChange={handleControlledInputChange}
             />
           </div>
         </fieldset>
-        <fieldset>
-          <div className="form-group">
-            <label htmlFor="longitude">Longitude:</label>
+        <fieldset className="form-control-radio">
+          
+          {Categories.map(Cat=>{
+            return(<div className="form-group-cat">
+            <label htmlFor="category_id">{Cat.label}</label>
             <input
-              type="text"
-              id="longitude"
+              type="checkbox"
+              id="category_id"
               required
               autoFocus
               className="form-control"
-              placeholder="longitude"
-              value={Posts.longitude}
+              value={Cat.id}
               onChange={handleControlledInputChange}
-            />
-          </div>
+            />          
+            </div>)
+          })}
+
         </fieldset>
-        <button className="btn btn-primary" onClick={handleClickSaveAnimal}>  Submit </button>
+        <button className="btn btn-primary" onClick={handleClickSavePost}>  Submit </button>
       </form>)
 
 

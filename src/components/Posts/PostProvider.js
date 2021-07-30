@@ -4,6 +4,7 @@ export const PostContext = createContext()
 
 export const PostProvider = (props) => {
     const [Posts, setPosts] = useState([])
+    const [Post, setPostsBySubscripton] = useState([])
 
     const userId = localStorage.getItem("rare_user_id")
 
@@ -24,11 +25,11 @@ export const PostProvider = (props) => {
             .then(setPosts)
     }
 
-    // const getPostsBySubscripton = (id) => {
-    //     return fetch(`http://localhost:8088/posts?subscriber_id=${id}`)
-    //         .then(res => res.json())
-    //         .then(setPostsBySubscripton)
-    // }
+    const getPostsBySubscripton = (id) => {
+        return fetch(`http://localhost:8088/posts?subscriber_id=${id}`)
+            .then(res => res.json())
+            .then(setPostsBySubscripton)
+    }
 
     const deletePost = postId => {
         return fetch(`http://localhost:8088/posts/${postId}`, {
@@ -57,7 +58,8 @@ export const PostProvider = (props) => {
             getPostsBySubscripton,
             setPostsBySubscripton,
             deletePost,
-            updatePost
+            updatePost,
+            addPost
         }}>
             {props.children}
         </PostContext.Provider>
