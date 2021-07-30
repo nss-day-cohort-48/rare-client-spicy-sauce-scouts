@@ -10,3 +10,10 @@
 .post__info{
     margin: 5rem;
 }
+.form-group-cat{
+    margin-left: 1rem;
+}
+
+.form-control-radio{
+    display: flex;
+}
