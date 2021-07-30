@@ -1,15 +1,29 @@
-import React, { useEffect, useContext } from "react"
+import React, { useEffect, useContext, useState } from "react"
 import {PostContext} from "./PostProvider"
 import {Createpost} from "./CreatePost"
 import "./Post.css"
 export const Post = () => {
-    const { Posts, getPosts } = useContext(PostContext)
+    const { Posts, getPosts, searchTerms } = useContext(PostContext)
+    const {filteredPosts, setFilteredPost} = useState([])
 
     const Currentuser = parseInt(localStorage.getItem("rare_user_id"))
 
     useEffect(() => {
         getPosts()
     }, [])
+
+    useEffect(() => {
+        if (searchTerms !== "") {
+            // If the search field is not blank, display matching words from posts title
+            const subset = Posts.filter(post => post.title.toLowerCase().includes(searchTerms) || post.content.toLowerCase().includes(searchTerms))
+            setFilteredPosts(subset)
+        } else {
+            // If the search field is blank, display all shirts
+            setFilteredPosts(Posts)
+        }
+    }, [searchTerms, Posts])
+
+    
 
     return (<>
     <Createpost/>

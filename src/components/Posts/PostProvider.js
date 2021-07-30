@@ -5,6 +5,7 @@ export const PostContext = createContext()
 export const PostProvider = (props) => {
     const [Posts, setPosts] = useState([])
     const [Post, setPostsBySubscripton] = useState([])
+    const [ searchTerms, setSearchTerms ] = useState("")
 
     const userId = localStorage.getItem("rare_user_id")
 
@@ -59,7 +60,9 @@ export const PostProvider = (props) => {
             setPostsBySubscripton,
             deletePost,
             updatePost,
-            addPost
+            addPost,
+            searchTerms,
+            setSearchTerms
         }}>
             {props.children}
         </PostContext.Provider>
