@@ -49,7 +49,11 @@ export const PostProvider = (props) => {
         .then(getPosts)
     }
 
-
+    const getPostById = (postId) => {
+        console.log(postId)
+        return fetch(`http://localhost:8088/posts/${postId}`)
+        .then(res => res.json())
+    }
 
     return (
         <PostContext.Provider value={{
@@ -59,7 +63,8 @@ export const PostProvider = (props) => {
             // setPostsBySubscripton,
             deletePost,
             updatePost,
-            addPost
+            addPost,
+            getPostById
         }}>
             {props.children}
         </PostContext.Provider>
