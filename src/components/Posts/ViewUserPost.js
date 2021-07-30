@@ -72,6 +72,7 @@ export const UserPost = () => {
                                         releasePost(post.id)
                                     }
                                     }>DELETE</button>
+                                    
                                     </div>
                                 )
                             })
