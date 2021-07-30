@@ -1,4 +1,5 @@
 import React, { useEffect, useContext } from "react"
+import { UserPost } from "../Posts/ViewUserPost.js"
 import { HumanDate } from "../utils/HumanDate.js"
 import { ProfileContext } from "./AuthProvider.js"
 import "./Profile.css"
@@ -36,7 +37,8 @@ export const Profile = () => {
                                 <h3>Your Posts</h3>
                                 <div class="cards">
                                     <div class="cards__item">
-                                        Post 1
+                                        <UserPost/>
+                                        
                                     </div>
                                     <div class="cards__item">
                                         Post 1
