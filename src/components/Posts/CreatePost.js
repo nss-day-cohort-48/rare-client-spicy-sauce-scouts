@@ -2,10 +2,12 @@ import React, { useContext, useEffect, useState } from "react";
 import { PostContext } from "./PostProvider";
 import { useHistory } from "react-router-dom";
 import {CategoryContext} from "../Categories/CategoryProvider"
+import {TagContext} from "../Tags/TagProvider"
 
 export const Createpost = () => {
   const { getPosts, addPost } = useContext(PostContext)
   const { Categories,getCategories} = useContext(CategoryContext)
+  const { Tags, getTags} = useContext(TagContext)
   const userId = localStorage.getItem('rare_user_id');
   const history = useHistory();
   const [Posts, setPosts] = useState({
@@ -23,6 +25,9 @@ export const Createpost = () => {
   }, []);
   useEffect(() => {
     getCategories()
+  }, []);
+  useEffect(() => {
+    getTags()
   }, []);
 
 
@@ -118,6 +123,24 @@ export const Createpost = () => {
               autoFocus
               className="form-control"
               value={Cat.id}
+              onChange={handleControlledInputChange}
+            />          
+            </div>)
+          })}
+
+        </fieldset>
+        <fieldset className="form-control-radio">
+          
+          {Tags.map(tag=>{
+            return(<div className="form-group-cat">
+            <label htmlFor="tag_id">{tag.label}</label>
+            <input
+              type="checkbox"
+              id="tag_id"
+              required
+              autoFocus
+              className="form-control"
+              value={tag.id}
               onChange={handleControlledInputChange}
             />          
             </div>)

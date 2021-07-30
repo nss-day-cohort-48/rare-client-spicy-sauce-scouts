@@ -56,8 +56,8 @@ export const PostProvider = (props) => {
         <PostContext.Provider value={{
             Posts, getPosts,
             setPosts,
-            getPostsBySubscripton,
-            setPostsBySubscripton,
+            // getPostsBySubscripton,
+            // setPostsBySubscripton,
             deletePost,
             updatePost,
             addPost,
