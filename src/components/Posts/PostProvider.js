@@ -49,11 +49,11 @@ export const PostProvider = (props) => {
         .then(getPosts)
     }
 
-    const getPostById = postId => {
-        return fetch (`http://localhost:8088/posts/${postId}`)
+    const getPostById = (postId) => {
+        console.log(postId)
+        return fetch(`http://localhost:8088/posts/${postId}`)
         .then(res => res.json())
     }
-
 
     return (
         <PostContext.Provider value={{
