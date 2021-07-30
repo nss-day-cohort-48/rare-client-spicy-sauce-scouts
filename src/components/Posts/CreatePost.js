@@ -26,6 +26,7 @@ export const Createpost = () => {
   }, []);
 
 
+
   const handleControlledInputChange = (event) => {
     //making a new post
     const newPost = { ...Posts };
@@ -84,7 +85,7 @@ export const Createpost = () => {
               required
               autoFocus
               className="form-control"
-              placeholder="description"
+              placeholder="image_url"
               value={Posts.image_url}
               onChange={handleControlledInputChange}
             />
@@ -99,7 +100,7 @@ export const Createpost = () => {
               required
               autoFocus
               className="form-control"
-              placeholder="latitude"
+              placeholder="content"
               value={Posts.content}
               onChange={handleControlledInputChange}
             />
@@ -116,7 +117,6 @@ export const Createpost = () => {
               required
               autoFocus
               className="form-control"
-              placeholder="as"
               value={Cat.id}
               onChange={handleControlledInputChange}
             />          
