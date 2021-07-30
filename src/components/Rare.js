@@ -11,6 +11,8 @@ import { PostProvider } from "./Posts/PostProvider";
 import { CategoryProvider } from "./Categories/CategoryProvider";
 import { IndividualPost } from "./Posts/IndividualPost";
 import { Createpost } from "./Posts/CreatePost";
+import {CommentProvider} from "./Comments/CommentProvider"
+import { TagProvider } from "./Tags/TagProvider" 
 
 export const Rare = () => (
   <>
@@ -39,9 +41,11 @@ export const Rare = () => (
         }
       }}
     />
-    <ProfileProvider>
+      <PostProvider>
+      <TagProvider>
+      <ProfileProvider>
       <CategoryProvider>
-         <PostProvider>
+      <CommentProvider>
           <Route
             path="/posts/:postId(\d+)"
             render={() => {
@@ -85,6 +89,15 @@ export const Rare = () => (
             }
             }}
           />
+          <Route exact path="/Posts" render={() => {
+            if (localStorage.getItem("rare_user_id")) {
+                return <>
+                   <Post/>
+                </>
+            } else {
+                return <Redirect to="/" />
+            }
+        }} />
 
           <Route
             exact
@@ -97,18 +110,17 @@ export const Rare = () => (
               }
             }}
           />
+        <Route path="/register" render={() => {
+            if (localStorage.getItem("rare_user_id")) {
+                return <Redirect to="/" />
+            } else {
+                return <Register />
+            }
+        }} />
+        </CommentProvider>
+        </CategoryProvider>
+        </ProfileProvider>
+        </TagProvider>
         </PostProvider>
-      </CategoryProvider>
-    </ProfileProvider>
-    <Route
-      path="/register"
-      render={() => {
-        if (localStorage.getItem("rare_user_id")) {
-          return <Redirect to="/" />;
-        } else {
-          return <Register />;
-        }
-      }}
-    />
   </>
-);
+)
