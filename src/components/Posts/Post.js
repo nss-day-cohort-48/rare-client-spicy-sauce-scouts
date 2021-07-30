@@ -8,6 +8,13 @@ import { CreateComment } from "../Comments/CreateComment"
 export const Post = () => {
     const { Posts, getPosts, searchTerms } = useContext(PostContext)
     const [filteredPosts, setFiltered ] = useState([])
+import { useHistory } from "react-router-dom"
+import {Comment} from "../Comments/CommentList"
+import {CreateComment} from "../Comments/CreateComment"
+
+export const Post = () => {
+    const { Posts, getPosts } = useContext(PostContext)
+    const history = useHistory()
 
     const Currentuser = parseInt(localStorage.getItem("rare_user_id"))
 
