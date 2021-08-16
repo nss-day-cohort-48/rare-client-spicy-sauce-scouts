@@ -5,8 +5,9 @@ import "./Auth.css"
 export const Register = (props) => {
     const firstName = useRef()
     const lastName = useRef()
+    const username = useRef()
     const email = useRef()
-    const bio = useRef()
+    // const bio = useRef()
     const password = useRef()
     const verifyPassword = useRef()
     const passwordDialog = useRef()
@@ -17,7 +18,7 @@ export const Register = (props) => {
 
         if (password.current.value === verifyPassword.current.value) {
             const newUser = {
-                "username": email.current.value,
+                "username": username.current.value,
                 "first_name": firstName.current.value,
                 "last_name": lastName.current.value,
                 "email": email.current.value,
@@ -26,7 +27,7 @@ export const Register = (props) => {
                 "profile_image_url": "",
             }
 
-            return fetch("http://localhost:8088/register", {
+            return fetch("http://localhost:8000/register", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -36,8 +37,8 @@ export const Register = (props) => {
             })
                 .then(res => res.json())
                 .then(res => {
-                    if ("active" in res && res.active) {
-                        localStorage.setItem("rare_user_id", res.id)
+                    if ("token" in res) {
+                        localStorage.setItem("rare_user_token", res.id)
                         history.push("/")
                     }
                 })
@@ -63,6 +64,10 @@ export const Register = (props) => {
                 <fieldset>
                     <label htmlFor="lastName"> Last Name </label>
                     <input ref={lastName} type="text" name="lastName" className="form-control" placeholder="Last name" required />
+                </fieldset>
+                <fieldset>
+                    <label htmlFor="username"> Username </label>
+                    <input ref={username} type="text" name="username" className="form-control" placeholder="Username" required />
                 </fieldset>
                 <fieldset>
                     <label htmlFor="inputEmail"> Email address </label>
