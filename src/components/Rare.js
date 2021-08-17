@@ -11,8 +11,8 @@ import { PostProvider } from "./Posts/PostProvider";
 import { CategoryProvider } from "./Categories/CategoryProvider";
 import { IndividualPost } from "./Posts/IndividualPost";
 import { Createpost } from "./Posts/CreatePost";
-import {CommentProvider} from "./Comments/CommentProvider"
-import { TagProvider } from "./Tags/TagProvider" 
+import { CommentProvider } from "./Comments/CommentProvider"
+import { TagProvider } from "./Tags/TagProvider"
 
 export const Rare = () => (
   <>
@@ -41,76 +41,76 @@ export const Rare = () => (
         }
       }}
     />
-      <PostProvider>
+    <PostProvider>
       <TagProvider>
-      <ProfileProvider>
-      <CategoryProvider>
-      <CommentProvider>
-          <Route
-            path="/posts/:postId(\d+)"
-            render={() => {
-              
-                return (
-                <>
-                <IndividualPost />
-                </>
-                )
-              }
-            }
-          />
-          <Route
-            exact
-            path="/Posts"
-            render={() => {
-              if (localStorage.getItem("rare_user_id")) {
-                return (
-                  <>
-                    <Post />
-                  </>
-                );
-              } else {
-                return <Redirect to="/" />;
-              }
-            }}
-          />
+        <ProfileProvider>
+          <CategoryProvider>
+            <CommentProvider>
+              <Route
+                path="/posts/:postId(\d+)"
+                render={() => {
 
-          <Route
-            exact
-            path="/posts/create"
-            render={() => {
-              if (localStorage.getItem("rare_user_id")) {
-                return (
-                  <>
-                    <Createpost />
-                  </>
-                );
-            } else {
-              return <Redirect to="/" />;
-            }
-            }}
-          />
-          <Route
-            exact
-            path="/Profile"
-            render={() => {
-              if (localStorage.getItem("rare_user_id")) {
-                return <Profile />;
-              } else {
-                return <Redirect to="/" />;
-              }
-            }}
-          />
-        <Route path="/register" render={() => {
-            if (localStorage.getItem("rare_user_id")) {
-                return <Redirect to="/" />
-            } else {
-                return <Register />
-            }
-        }} />
-        </CommentProvider>
-        </CategoryProvider>
+                  return (
+                    <>
+                      <IndividualPost />
+                    </>
+                  )
+                }
+                }
+              />
+              <Route
+                exact
+                path="/Posts"
+                render={() => {
+                  if (localStorage.getItem("rare_user_id")) {
+                    return (
+                      <>
+                        <Post />
+                      </>
+                    );
+                  } else {
+                    return <Redirect to="/" />;
+                  }
+                }}
+              />
+
+              <Route
+                exact
+                path="/posts/create"
+                render={() => {
+                  if (localStorage.getItem("rare_user_id")) {
+                    return (
+                      <>
+                        <Createpost />
+                      </>
+                    );
+                  } else {
+                    return <Redirect to="/" />;
+                  }
+                }}
+              />
+              <Route
+                exact
+                path="/Profile"
+                render={() => {
+                  if (localStorage.getItem("rare_user_id")) {
+                    return <Profile />;
+                  } else {
+                    return <Redirect to="/" />;
+                  }
+                }}
+              />
+              <Route path="/register" render={() => {
+                if (localStorage.getItem("rare_user_id")) {
+                  return <Redirect to="/" />
+                } else {
+                  return <Register />
+                }
+              }} />
+            </CommentProvider>
+          </CategoryProvider>
         </ProfileProvider>
-        </TagProvider>
-        </PostProvider>
+      </TagProvider>
+    </PostProvider>
   </>
 )
