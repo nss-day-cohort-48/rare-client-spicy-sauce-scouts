@@ -16,105 +16,102 @@ import { CommentProvider } from "./Comments/CommentProvider"
 import { TagProvider } from "./Tags/TagProvider"
 
 export const Rare = () => (
-    <>
-        <Route
-            render={() => {
-                if (localStorage.getItem("rare_user_id")) {
+  <>
+    <Route
+      render={() => {
+        if (localStorage.getItem("rare_user_id")) {
+          return (
+            <>
+              <NavBar />
+              <Redirect to="/posts" />
+            </>
+          );
+        } else {
+          return <Redirect to="/login" />;
+        }
+      }}
+    />
+
+    <Route
+      path="/login"
+      render={() => {
+        if (localStorage.getItem("rare_user_id")) {
+          return <Redirect to="/" />;
+        } else {
+          return <Login />;
+        }
+      }}
+    />
+    <PostProvider>
+      <TagProvider>
+        <ProfileProvider>
+          <CategoryProvider>
+            <CommentProvider>
+              <Route
+                path="/posts/:postId(\d+)"
+                render={() => {
+
+                  return (
+                    <>
+                      <IndividualPost />
+                    </>
+                  )
+                }
+                }
+              />
+              <Route
+                exact
+                path="/Posts"
+                render={() => {
+                  if (localStorage.getItem("rare_user_id")) {
                     return (
-                        <>
-                            <NavBar />
-                            <Redirect to="/posts" />
-                        </>
+                      <>
+                        <Post />
+                      </>
                     );
-                } else {
-                    return <Redirect to="/login" />;
-                }
-            }}
-        />
-
-        <Route
-            path="/login"
-            render={() => {
-                if (localStorage.getItem("rare_user_id")) {
+                  } else {
                     return <Redirect to="/" />;
+                  }
+                }}
+              />
+
+              <Route
+                exact
+                path="/posts/create"
+                render={() => {
+                  if (localStorage.getItem("rare_user_id")) {
+                    return (
+                      <>
+                        <Createpost />
+                      </>
+                    );
+                  } else {
+                    return <Redirect to="/" />;
+                  }
+                }}
+              />
+              <Route
+                exact
+                path="/Profile"
+                render={() => {
+                  if (localStorage.getItem("rare_user_id")) {
+                    return <Profile />;
+                  } else {
+                    return <Redirect to="/" />;
+                  }
+                }}
+              />
+              <Route path="/register" render={() => {
+                if (localStorage.getItem("rare_user_id")) {
+                  return <Redirect to="/" />
                 } else {
-                    return <Login />;
+                  return <Register />
                 }
-            }}
-        />
-        <PostProvider>
-            <TagProvider>
-                <ProfileProvider>
-                    <CategoryProvider>
-                        <CommentProvider>
-                            <Route
-                                path="/posts/:postId(\d+)"
-                                render={() => {
-
-                                    return (
-                                        <>
-                                            <IndividualPost />
-                                        </>
-                                    )
-                                }
-                                }
-                            />
-                            <Route
-                                exact
-                                path="/Posts"
-                                render={() => {
-                                    if (localStorage.getItem("rare_user_id")) {
-                                        return (
-                                            <>
-                                                <PostSearch />
-                                                <Post />
-                                            </>
-                                        );
-                                    } else {
-                                        return <Redirect to="/" />;
-                                    }
-                                }}
-                            />
-
-                            <Route
-                                exact
-                                path="/posts/create"
-                                render={() => {
-                                    if (localStorage.getItem("rare_user_id")) {
-                                        return (
-                                            <>
-                                                <Createpost />
-                                            </>
-                                        );
-                                    } else {
-                                        return <Login />
-                                    }
-                                }} />
-
-                            <Route
-                                exact
-                                path="/Profile"
-                                render={() => {
-                                    if (localStorage.getItem("rare_user_id")) {
-                                        return <Profile />;
-                                    } else {
-                                        return <Redirect to="/" />;
-                                    }
-                                }}
-                            />
-                            
-                            <Route path="/register" render={() => {
-                                if (localStorage.getItem("rare_user_id")) {
-                                    return <Redirect to="/" />
-                                } else {
-                                    return <Register />
-                                }
-                            }} />
-
-                        </CommentProvider>
-                    </CategoryProvider>
-                </ProfileProvider>
-            </TagProvider>
-        </PostProvider>
-    </>
+              }} />
+            </CommentProvider>
+          </CategoryProvider>
+        </ProfileProvider>
+      </TagProvider>
+    </PostProvider>
+  </>
 )
