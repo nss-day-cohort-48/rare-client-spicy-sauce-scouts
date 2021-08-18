@@ -41,7 +41,7 @@ export const PostProvider = (props) => {
 		});
 	};
 	const createPost = (postObject) => {
-		return fetch("http://localhost:8000/posts/create", {
+		return fetch("http://localhost:8000/posts", {
 			method: "POST",
 			headers: {
 				Authorization: `Token ${localStorage.getItem("rare_user_id")}`,

@@ -41,7 +41,7 @@ export const MyPostList = props => {
         className="create__button"
         onClick={() => history.push("/Posts/create")}
         >
-        Create Post?
+        Create Post
       </button>
         <div>
             <h1>My Posts</h1>
