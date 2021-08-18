@@ -1,6 +1,6 @@
 import React, { useEffect, useContext, useState } from "react"
 import { PostContext } from "./PostProvider"
-import { Createpost } from "./CreatePost"
+import { Createpost } from "./PostForm"
 import "./Post.css"
 import { Comment } from "../Comments/CommentList"
 import { CreateComment } from "../Comments/CreateComment"

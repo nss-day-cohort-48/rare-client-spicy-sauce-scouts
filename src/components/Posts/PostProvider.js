@@ -1,75 +1,96 @@
-import React, { useState,createContext } from "react"
+import React, { useState, createContext } from "react";
 
-export const PostContext = createContext()
+// The context is imported and used by individual components that need data
+export const PostContext = createContext();
 
+// This component establishes what data can be used.
 export const PostProvider = (props) => {
-    const [Posts, setPosts] = useState([])
-    const [Post, setPostsBySubscripton] = useState([])
-    const [ searchTerms, setSearchTerms ] = useState("")
+	const [posts, setPosts] = useState([]);
+	const [post, setPost] = useState({});
 
-    const userId = localStorage.getItem("rare_user_id")
+	const getPostsByUserId = (userId) => {
+		return (
+			fetch(`http://localhost:8000/posts?user=${userId}`,
+			{
+				headers: {
+					Authorization: `Token ${localStorage.getItem("rare_user_id")}`,
+				},
+			}
+		)).then((res) => res.json())
+		.then(setPosts)
+	};
 
-    const addPost = post => {
-        return fetch("http://localhost:8088/posts", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(post)
-        })
-        .then(response => response.json())
-    }
+	const getPosts = () => {
+		return (
+			fetch(`http://localhost:8000/posts`,
+			{
+				headers: {
+					Authorization: `Token ${localStorage.getItem("rare_user_id")}`,
+				},
+			}			
+		)).then((res) => res.json())
+		.then(setPosts)
+	};
 
-    const getPosts = () => {
-        return fetch("http://localhost:8088/posts")
-            .then(res => res.json())
-            .then(setPosts)
-    }
+	const deletePost = (postId) => {
+		return fetch(`http://localhost:8000/posts/${postId}`, {
+			method: "DELETE",
+			headers: {
+				Authorization: `Token ${localStorage.getItem("rare_user_id")}`,
+			},
+		});
+	};
+	const createPost = (postObject) => {
+		return fetch("http://localhost:8000/posts/create", {
+			method: "POST",
+			headers: {
+				Authorization: `Token ${localStorage.getItem("rare_user_id")}`,
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(postObject),
+		}).then(getPosts);
+	};
 
-    const getPostsBySubscripton = (id) => {
-        return fetch(`http://localhost:8088/posts?subscriber_id=${id}`)
-            .then(res => res.json())
-            .then(setPostsBySubscripton)
-    }
+	const getPostsDetails = (postId) => {
+		return (
+			fetch(`http://localhost:8000/posts/${postId}`,
+			{
+				headers: {
+					Authorization: `Token ${localStorage.getItem("rare_user_id")}`,
+				},
+			}		
+		)).then((res) => res.json())
+		.then(setPost)
+	};
 
-    const deletePost = postId => {
-        return fetch(`http://localhost:8088/posts/${postId}`, {
-            methodL: "DELETE"
-        })
-        .then(getPosts)
-    }
+	const updatePost = (update_post) => {
+		return fetch(`http://localhost:8000/posts/${update_post.id}`, {
+			method: "PUT",
+			headers: {
+				Authorization: `Token ${localStorage.getItem("rare_user_id")}`,
 
-    const updatePost = postObj => {
-        return fetch(`http://localhost:8088/posts/${postObj.id}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(postObj)
-        })
-        .then(getPosts)
-    }
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(update_post),
+		}).then(getPosts);
+	};
 
-    const getPostById = (postId) => {
-        console.log(postId)
-        return fetch(`http://localhost:8088/posts/${postId}`)
-        .then(res => res.json())
-    }
-
-    return (
-        <PostContext.Provider value={{
-            Posts, getPosts,
-            setPosts,
-            getPostsBySubscripton,
-            setPostsBySubscripton,
-            deletePost,
-            updatePost,
-            addPost,
-            searchTerms,
-            setSearchTerms,
-            getPostById
-        }}>
-            {props.children}
-        </PostContext.Provider>
-    )
-}
+	return (
+		<PostContext.Provider
+			value={{
+				posts,
+				setPosts,
+				post,
+				setPost,
+				getPostsByUserId,
+				getPostsDetails,
+				getPosts,
+				deletePost,
+				createPost,
+				updatePost,
+			}}
+		>
+			{props.children}
+		</PostContext.Provider>
+	);
+};
