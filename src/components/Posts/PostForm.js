@@ -37,7 +37,7 @@ export const PostForm = () => {
 
 	const checkForm = () => {
 		if (
-			post.category_id === undefined ||
+			// post.category_id === undefined ||
 			post.title === undefined ||
 			post.image_url === undefined ||
 			post.content === undefined
@@ -53,9 +53,9 @@ export const PostForm = () => {
 		if (checkForm() === true) {
 			createPost({
 				user_id: parseInt(userId),
-				category_id: parseInt(post.category_id),
+				category_id: 1,
+				// category_id: parseInt(post.category_id),
 				title: post.title,
-				publication_date: new Date().toLocaleDateString(),
 				image_url: post.image_url,
 				content: post.content,
 				approved: parseInt(1),
@@ -83,7 +83,7 @@ export const PostForm = () => {
 							onChange={handleControlledInputChange}
 						>
 							<option value="0">Select Category </option>
-							{categories.map((category) => (
+							{categories?.map((category) => (
 								<option key={category.id} value={category.id}>
 									{category.label}
 								</option>
@@ -132,7 +132,7 @@ export const PostForm = () => {
 				</fieldset>
 				<fieldset>
 					<div className="center posts  blueText">
-						{tags.map((tag) => (
+						{tags?.map((tag) => (
 							<>
 								<input
 									type="checkbox"
