@@ -63,15 +63,15 @@ export const PostProvider = (props) => {
 		.then(setPost)
 	};
 
-	const updatePost = (update_post) => {
-		return fetch(`http://localhost:8000/posts/${update_post.id}`, {
+	const updatePost = (updatedPost) => {
+		return fetch(`http://localhost:8000/posts/${updatedPost.id}`, {
 			method: "PUT",
 			headers: {
 				Authorization: `Token ${localStorage.getItem("rare_user_id")}`,
 
 				"Content-Type": "application/json",
 			},
-			body: JSON.stringify(update_post),
+			body: JSON.stringify(updatedPost),
 		}).then(getPosts);
 	};
 
