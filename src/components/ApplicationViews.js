@@ -24,7 +24,7 @@ export const ApplicationViews = () => {
 
 
 
-                <Route exact path="/myposts">
+                <Route exact path="/MyPosts">
                     <MyPostList />
                 </Route>
                 <Route exact path="/posts/create">

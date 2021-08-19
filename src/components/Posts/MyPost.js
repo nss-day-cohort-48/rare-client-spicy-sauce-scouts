@@ -1,25 +1,32 @@
-import React, { useContext, useEffect} from "react"
+import React, { useContext, useEffect, useState} from "react"
 import { PostContext } from "./PostProvider"
 import { Link, useHistory } from "react-router-dom";
 
 export const MyPostList = props => {
-    const {posts, getPostsByUserId} = useContext(PostContext)
-    const currentUserId = parseInt(localStorage.getItem("rare_user_id"))
+    const {posts, getPosts} = useContext(PostContext)
+    const [filteredPosts, setFilteredPosts] = useState([])
+    const currentUserId = localStorage.getItem("rare_user_id")
+    const currentUsername = localStorage.getItem("rare_username")
     const history = useHistory();
 
     useEffect(() => {
-        getPostsByUserId(currentUserId)
-    }, [])
+        getPosts()
+      }, [])
 
-    const editPostButton = (user_id, post_id) => {
+      useEffect(() => {
+        let filter = posts.filter(post => post.user.username === currentUsername)
+        setFilteredPosts(filter)
+      }, [posts])
+      
+      const editPostButton = (user_id, post_id) => {
         if (user_id == localStorage.getItem("rare_user_id")) {
-            return <button
-            className="post blueText"
-            id={`post--${post_id}`}
-            onClick={(event) => {
-              event.preventDefault();
-              handleUpdatePost(post_id);
-            }}
+          return <button
+          className="post blueText"
+          id={`post--${post_id}`}
+          onClick={(event) => {
+            event.preventDefault();
+            handleUpdatePost(post_id);
+          }}
           >
             Edit Post
           </button>
@@ -28,15 +35,17 @@ export const MyPostList = props => {
             return 
           }
         }
-
+        
         const handleUpdatePost = (post_id) => {
-            history.push(`/posts/edit/${post_id}`);
-          };
-
-
-if (posts.length > 0) {
-
-  return (
+          history.push(`/posts/edit/${post_id}`);
+        };
+        
+        
+        if (posts.length > 0) {
+          
+          console.log(posts)
+          console.log(currentUserId)
+          return (
     <>
         <button
         className="create__button"
@@ -47,7 +56,8 @@ if (posts.length > 0) {
         <div>
             <h1>My Posts</h1>
             {
-              posts?.map(post => {
+              filteredPosts?.map(post => {
+                
                 return (
                   <>
                         <article className="flex">
