@@ -8,6 +8,8 @@ import { PostList } from "./Posts/PostList"
 import { PostEdit } from "./Posts/EditPost"
 import { CategoryProvider } from "./Categories/CategoryProvider"
 import { TagProvider } from "./Tags/TagProvider"
+import { CommentProvider } from "./Comments/CommentProvider"
+import {ProfileProvider} from "./auth/AuthProvider"
 
 export const ApplicationViews = () => {
     return <>
@@ -16,7 +18,9 @@ export const ApplicationViews = () => {
             lineHeight: "1.75rem"
         }}>
             </main>
+            <ProfileProvider>
             <PostProvider>
+                <CommentProvider>
                 <CategoryProvider>
                     <TagProvider>
                 <Route exact path="/myposts">
@@ -36,7 +40,8 @@ export const ApplicationViews = () => {
                 </Route>
                     </TagProvider>
                 </CategoryProvider>
+                </CommentProvider>
             </PostProvider>
-
+            </ProfileProvider>
     </>
 }

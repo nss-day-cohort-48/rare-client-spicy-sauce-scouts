@@ -1,6 +1,8 @@
 import React, { useContext, useEffect } from "react";
 import { PostContext } from "./PostProvider";
 import { useHistory, Link } from "react-router-dom";
+import {Comment} from "../Comments/CommentList"
+import {CreateComment} from "../Comments/CreateComment"
 
 export const PostList = (props) => {
 	const { posts, getPosts } = useContext(PostContext);
@@ -65,6 +67,9 @@ export const PostList = (props) => {
 								</div>
 								<div key="{category}">Category: {post.category.label}</div>
 								{editPostButton(post.user_id, post.id)}
+								<header className="Comment__header"><h3>Comments</h3></header>
+                                    <CreateComment postid={post.id} />
+                                    <Comment postid={post.id} />
 							</article>
 						</>
 					);
