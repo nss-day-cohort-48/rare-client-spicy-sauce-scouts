@@ -7,13 +7,23 @@ export const ProfileProvider = (props) => {
     const [CurrentUser ,setCurrentUser] = useState([])
 
     const getUsers = () => {
-        return fetch("http://localhost:8000/users")
+        return fetch("http://localhost:8000/users",			
+        {
+            headers: {
+                Authorization: `Token ${localStorage.getItem("rare_user_id")}`,
+            },
+        }	)
             .then(res => res.json())
             .then(setUsers)
     }
 
     const getUserById = (id) => {
-        return fetch(`http://localhost:8000/users/${id}`)
+        return fetch(`http://localhost:8000/users/${id}`,			
+        {
+            headers: {
+                Authorization: `Token ${localStorage.getItem("rare_user_id")}`,
+            },
+        }	)
             .then(res => res.json())
             .then(setCurrentUser)
     }
