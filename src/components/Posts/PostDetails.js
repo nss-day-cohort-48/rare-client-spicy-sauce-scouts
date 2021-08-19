@@ -18,14 +18,6 @@ export const PostDetails = () => {
         getPostsDetails(postId)
     }, [])
 
-    const renderDeleteButton = () => {
-        return (
-            <button onClick = {() => {
-                deletePost(postId).then(()=>{history.push("/myposts")})      
-            }}            
-            >DELETE POST</button>
-        )
-    }
 
 
 // TODO figure out how to get username from users from comments
@@ -40,7 +32,7 @@ export const PostDetails = () => {
                 <div>{post.content}</div>
                 <div>Category: {post.category?.label}</div>
                 <div>Author: {post.user?.first_name} {post.user?.last_name}</div>
-                {userId === post.user_id ? renderDeleteButton() : ""}
+
 
                 {post.comments?.map((comment) => {
                     return (
@@ -60,6 +52,15 @@ export const PostDetails = () => {
                 <button onClick={() => {
                     history.push(`/posts/comment/${postId}`)
                 }}>Comment</button>
+                <button onClick={() => {
+                    deletePost(postId)
+                    history.push(`/myposts`)
+                }}>Delete</button>
+                <button onClick={
+                    () => {
+                     history.push(`/posts/edit/${postId}`)   
+                    }
+                }>Edit</button>
         </div>
         </>
     )
