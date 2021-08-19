@@ -5,8 +5,8 @@ import "./Post.css"
 import { Comment } from "../Comments/CommentList"
 import { CreateComment } from "../Comments/CreateComment"
 import { useHistory } from "react-router-dom"
-// import {Comment} from "../Comments/CommentList"
-// import {CreateComment} from "../Comments/CreateComment"
+import {Comment} from "../Comments/CommentList"
+import {CreateComment} from "../Comments/CreateComment"
 
 export const Post = () => {
     const { Posts, getPosts, searchTerms } = useContext(PostContext)

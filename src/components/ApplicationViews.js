@@ -10,6 +10,9 @@ import { CategoryProvider } from "./Categories/CategoryProvider"
 import { TagProvider } from "./Tags/TagProvider"
 import { CommentProvider } from "./Comments/CommentProvider"
 
+import {ProfileProvider} from "./auth/AuthProvider"
+
+
 export const ApplicationViews = () => {
     return <>
         <main style={{
@@ -17,7 +20,9 @@ export const ApplicationViews = () => {
             lineHeight: "1.75rem"
         }}>
             </main>
+            <ProfileProvider>
             <PostProvider>
+                <CommentProvider>
                 <CategoryProvider>
                     <TagProvider>
                         <CommentProvider>
@@ -42,7 +47,8 @@ export const ApplicationViews = () => {
                         </CommentProvider>
                     </TagProvider>
                 </CategoryProvider>
+                </CommentProvider>
             </PostProvider>
-
+            </ProfileProvider>
     </>
 }
