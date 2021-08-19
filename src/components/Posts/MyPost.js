@@ -34,9 +34,10 @@ export const MyPostList = props => {
           };
 
 
+if (posts.length > 0) {
 
-    return (
-        <>
+  return (
+    <>
         <button
         className="create__button"
         onClick={() => history.push("/Posts/create")}
@@ -46,9 +47,9 @@ export const MyPostList = props => {
         <div>
             <h1>My Posts</h1>
             {
-                posts.map(post => {
-                    return (
-                        <>
+              posts?.map(post => {
+                return (
+                  <>
                         <article className="flex">
                         <Link to={`/posts/${post.id}`}>{post.title}</Link>
                         <div>{post.category.label}</div>
@@ -57,9 +58,23 @@ export const MyPostList = props => {
                         </article>
                         </>
                     )
-                })
+                  })
             }
         </div>
         </>
     )
+  } else {
+    return (
+      <>
+        <button
+        className="create__button"
+        onClick={() => history.push("/Posts/create")}
+        >
+        Create Post
+      </button>
+      <h1>No Posts Available</h1>
+
+      </>
+    )
+  }
 }

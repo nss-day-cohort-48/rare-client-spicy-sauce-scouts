@@ -55,7 +55,7 @@ export const PostList = (props) => {
 			</button>
 			<div>
 				<h1>Posts</h1>
-				{filteredPostsByDate.map((post) => {
+				{filteredPostsByDate?.map((post) => {
 					return (
 						<>
 							<article className="flex">
