@@ -33,15 +33,6 @@ export const PostEdit = () => {
 
 
     
-    // state is empty object
-    // useEffect(() => {
-    //     console.log(post)
-    //     getPostsDetails(postId).then( res => setPost(res)).then( () => {console.log(post)})
-        
-    // }, [postId])
-
-
-    
     // state is undefined
     useEffect(() => {
         getPostsDetails(postId)
@@ -53,7 +44,7 @@ export const PostEdit = () => {
 
     const checkForm = () => {
       if (
-        post.category_id === undefined ||
+        // post.category_id === undefined ||
         post.title === undefined ||
         post.image_url === undefined ||
         post.content === undefined
@@ -67,6 +58,7 @@ export const PostEdit = () => {
 
     const handleSavePost = () => {
         // const userId = localStorage.getItem("rare_user_id")
+        console.log("saving post")
         if (checkForm() === true) {
             updatePost({
             id: postId,
@@ -94,7 +86,7 @@ export const PostEdit = () => {
             <label htmlFor="category">Category:</label>
             <select value={post.category_id} name="category_id" id="category_id" className="center  post blueText" onChange={handleControlledInputChange}>
               <option value="0">Select Category </option>
-              {categories.map(category => (
+              {categories?.map(category => (
                 <option key={category.id} value={category.id}>
                   {category.label}
                 </option>
@@ -125,7 +117,8 @@ export const PostEdit = () => {
           disabled={isLoading}
           onClick={event => {
             setIsLoading(true)
-            event.preventDefault() 
+            event.preventDefault()
+
           }}>Edit Post</button>
         </form>
         </>

@@ -56,6 +56,11 @@ export const PostDetails = () => {
                     deletePost(postId)
                     history.push(`/myposts`)
                 }}>Delete</button>
+                <button onClick={
+                    () => {
+                     history.push(`/posts/edit/${postId}`)   
+                    }
+                }>Edit</button>
         </div>
         </>
     )
