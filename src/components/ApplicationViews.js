@@ -9,7 +9,9 @@ import { PostEdit } from "./Posts/EditPost"
 import { CategoryProvider } from "./Categories/CategoryProvider"
 import { TagProvider } from "./Tags/TagProvider"
 import { CommentProvider } from "./Comments/CommentProvider"
+
 import {ProfileProvider} from "./auth/AuthProvider"
+
 
 export const ApplicationViews = () => {
     return <>
@@ -23,7 +25,11 @@ export const ApplicationViews = () => {
                 <CommentProvider>
                 <CategoryProvider>
                     <TagProvider>
-                <Route exact path="/myposts">
+                        <CommentProvider>
+
+
+
+                <Route exact path="/MyPosts">
                     <MyPostList />
                 </Route>
                 <Route exact path="/posts/create">
@@ -38,6 +44,7 @@ export const ApplicationViews = () => {
                 <Route exact path="/posts/edit/:postId(\d+)">
                     <PostEdit />
                 </Route>
+                        </CommentProvider>
                     </TagProvider>
                 </CategoryProvider>
                 </CommentProvider>

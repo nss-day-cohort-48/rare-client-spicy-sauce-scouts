@@ -51,8 +51,9 @@ export const PostForm = () => {
 	const handleSavePost = () => {
 		const userId = localStorage.getItem("rare_user_id");
 		if (checkForm() === true) {
+			console.log(userId)
 			createPost({
-				user_id: parseInt(userId),
+				user_id: userId,
 				category_id: 1,
 				// category_id: parseInt(post.category_id),
 				title: post.title,
