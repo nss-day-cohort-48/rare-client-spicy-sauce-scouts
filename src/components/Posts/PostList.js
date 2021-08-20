@@ -75,7 +75,7 @@ export const PostList = (props) => {
 							<article className="flex">
 								<Link to={`/posts/${post.id}`}>{post.title}</Link>
 								<div key="{firstName}">
-									Author: {post.user.first_name} {post.user.last_name}
+								Author: <Link to={`../authors/${post.user.id}`}> {post.user.first_name} {post.user.last_name}</Link>
 								</div>
 								<div key="{category}">Category: {post.category.label}</div>
 								{editPostButton(post.user_id, post.id)}
