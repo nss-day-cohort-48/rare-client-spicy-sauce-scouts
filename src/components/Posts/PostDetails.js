@@ -28,7 +28,7 @@ export const PostDetails = () => {
         <div>
             <h1>{post.title}</h1>     
                 <div>{post.publication_date}</div>
-                <img src={post.image_url}></img>
+                <img src={post.image_url} height='300px'></img>
                 <div>{post.content}</div>
                 <div>Category: {post.category?.label}</div>
                 <div>Author: {post.user?.first_name} {post.user?.last_name}</div>
@@ -56,6 +56,11 @@ export const PostDetails = () => {
                     deletePost(postId)
                     history.push(`/myposts`)
                 }}>Delete</button>
+                <button onClick={
+                    () => {
+                     history.push(`/posts/edit/${postId}`)   
+                    }
+                }>Edit</button>
         </div>
         </>
     )

@@ -5,6 +5,7 @@ export const PostContext = createContext();
 
 // This component establishes what data can be used.
 export const PostProvider = (props) => {
+	const [searchTerms, setSearchTerms] = useState("");
 	const [posts, setPosts] = useState([]);
 	const [post, setPost] = useState({});
 
@@ -63,15 +64,15 @@ export const PostProvider = (props) => {
 		.then(setPost)
 	};
 
-	const updatePost = (update_post) => {
-		return fetch(`http://localhost:8000/posts/${update_post.id}`, {
+	const updatePost = (updatedPost) => {
+		return fetch(`http://localhost:8000/posts/${updatedPost.id}`, {
 			method: "PUT",
 			headers: {
 				Authorization: `Token ${localStorage.getItem("rare_user_id")}`,
 
 				"Content-Type": "application/json",
 			},
-			body: JSON.stringify(update_post),
+			body: JSON.stringify(updatedPost),
 		}).then(getPosts);
 	};
 
@@ -88,6 +89,8 @@ export const PostProvider = (props) => {
 				deletePost,
 				createPost,
 				updatePost,
+				searchTerms,
+				setSearchTerms
 			}}
 		>
 			{props.children}

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { PostContext } from "./PostProvider";
 import { useHistory, Link } from "react-router-dom";
 import {Comment} from "../Comments/CommentList"
@@ -7,8 +7,8 @@ import "./Post.css"
 
 
 export const PostList = (props) => {
-	const { posts, getPosts } = useContext(PostContext);
-
+	const { posts, getPosts, searchTerms } = useContext(PostContext);
+	const [ filteredPosts, setFiltered] = useState([])
 	const approvedPosts = posts.filter((post) => post.approved > 0);
 	const sortedPosts = approvedPosts.sort(
 		(post1, post2) =>
@@ -25,6 +25,16 @@ export const PostList = (props) => {
 	useEffect(() => {
 		getPosts();
 	}, []);
+
+	useEffect(() => {
+		if (searchTerms !== "") {
+			const subset = posts.filter(post => post.title.toLowerCase().includes(searchTerms))
+			setFiltered(subset)
+		}
+		else {
+			setFiltered(filteredPostsByDate)
+		}
+	},[searchTerms, posts])
 
 	const editPostButton = (user_id, post_id) => {
 		if (user_id == localStorage.getItem("rare_user_id")) {
@@ -44,6 +54,8 @@ export const PostList = (props) => {
 			return;
 		}
 	};
+
+
 
 	const handleUpdatePost = (post_id) => {
 		history.push(`/posts/edit/${post_id}`);
