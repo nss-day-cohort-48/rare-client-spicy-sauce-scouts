@@ -1,18 +1,18 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import {CommentContext} from "./CommentProvider"
+import "./Comment.css"
 
 export const CreateComment = ({postid}) => {
   const {addComment } = useContext(CommentContext)
   const userId = localStorage.getItem('rare_user_id');
   const history = useHistory();
   const [Comments, setComments] = useState({
-    post_id: 0,
-    author_id:0,
-    content: ""
+    post: 1,
+    author: 1,
+    content: "",
+    created_on: ""
   });
-
-
 
   const handleControlledInputChange = (event) => {
     //making a new post
@@ -22,20 +22,17 @@ export const CreateComment = ({postid}) => {
     
     setComments(newComment);
   };
-  //if user is signed in 
-  if (userId > 0) {
-    Comments.post_id = postid
-    Comments.author_id = parseInt(localStorage.getItem('rare_user_id'));
-  }
+
 
   const handleClickSavePost = (event) => {
     event.preventDefault();
-
-    //checking to see if the user has input a latitude
+    Comments.post = postid
+    Comments.author = userId
+    //checking to see if the user has input content
     if (Comments.content === "") {
       window.alert("Enter a comment");
     } else {
-        addComment(Comments).then(() => history.push("/"));
+        addComment(Comments).then(() => history.push("/Posts"));
     }
   };
 

@@ -33,7 +33,7 @@ export const CommentProvider = (props) => {
             headers: {
                 Authorization: `Token ${localStorage.getItem("rare_user_id")}`,
             },
-            methodL: "DELETE"
+            method: "DELETE"
         })
         .then(getComments)
     }
