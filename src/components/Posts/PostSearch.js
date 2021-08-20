@@ -1,18 +1,29 @@
-import React, { useContext } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { PostContext  } from "./PostProvider"
 import "./Post.css"
 
 
 export const PostSearch = () => {
-    const { setSearchTerms } = useContext(PostContext)
+    const { posts, getPosts, setSearchTerms } = useContext(PostContext);
+    const [ searchResults, setSearchResults] = useState([]);
+
+
+    useEffect(() => {
+        getPosts()
+    }, [])
+    
+    const handleChange = (event) => {
+        setSearchTerms(event.target.value)
+
+    }
+
 
     return (
         <>
-        Search:
-        <input type="text"
-        className="input--wide"
-        onKeyUp={(event) => setSearchTerms(event.target.value.toLowerCase())}
-        placeholder="Search Posts..."/>
+        <div>
+            <h3>Search Posts</h3>
+        <input type="text" onKeyUp={(event) => setSearchTerms(event.target.value)}/>
+      </div>
         </>
     )
-} 
+}
