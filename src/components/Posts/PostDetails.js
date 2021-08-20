@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react"
 import { PostContext } from "./PostProvider"
 import { useHistory, useParams } from "react-router-dom"
+import { FileUpload } from "./photoUpload"
 
 
 

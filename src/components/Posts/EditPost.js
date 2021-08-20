@@ -3,6 +3,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { PostContext } from "./PostProvider";
 import { CategoryContext } from "../Categories/CategoryProvider";
 
+
 export const PostEdit = () => {
     const { post, setPost, updatePost, getPostsDetails } = useContext(PostContext)
     const { categories, getCategories} = useContext(CategoryContext)
@@ -11,6 +12,25 @@ export const PostEdit = () => {
 
 	const history = useHistory();
     const { postId } = useParams();
+
+    const [image, setImage] = useState("");
+    const [url, setUrl] = useState("");
+    const uploadImage = () => {
+        const data = new FormData()
+        data.append("file", image)
+        data.append("upload_preset", "myUpload")
+        data.append("cloud_name", "kritikillz")
+        fetch("https://api.cloudinary.com/v1_1/kritikillz/image/upload", {
+            method: "post",
+            body: data
+        })
+            .then(resp => resp.json())
+            .then(data => {
+                console.log(data)
+                setUrl(data.url)
+            })
+            .catch(err => console.log(err))
+    }
 
     const handleControlledInputChange = (event) => {
       const editPost = { ...post }
@@ -21,6 +41,10 @@ export const PostEdit = () => {
     useEffect(() => {
         getCategories()
     }, [])
+
+    useEffect(() => {
+      setUrl(post.image_url)
+    },[post])
 
     useEffect(() => {
       if (isLoading === false) {
@@ -46,7 +70,7 @@ export const PostEdit = () => {
       if (
         // post.category_id === undefined ||
         post.title === undefined ||
-        post.image_url === undefined ||
+        url === undefined ||
         post.content === undefined
       ){return false}
       else {return true}
@@ -64,7 +88,7 @@ export const PostEdit = () => {
             id: postId,
             category_id: parseInt(post.category_id),
             title: post.title,
-            image_url: post.image_url,
+            image_url: url,
             content: post.content,
         })
         .then(() => history.push("/myposts"))
@@ -101,10 +125,16 @@ export const PostEdit = () => {
           </div>
         </fieldset>
         <fieldset>
-          <div className="center posts  blueText">
-            <label htmlFor="image_url">Image Url:</label>
-            <input value={post.image_url} type="image_url" id="image_url" name="image_url" className="center  post blueText" onChange={handleControlledInputChange}/>
-          </div>
+        <div>
+                    <input type="file" onChange={(e) => setImage(e.target.files[0])}></input>
+                    <button onClick={(event) => {
+						event.preventDefault()
+						uploadImage()
+				} }>Upload</button>
+        <br/>
+        <img style={{ width: "250px" }} src={url} />
+                </div>
+          
         </fieldset>
         <fieldset>
           <div className="center posts  blueText">

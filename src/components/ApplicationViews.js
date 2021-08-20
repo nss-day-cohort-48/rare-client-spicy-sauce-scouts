@@ -16,6 +16,7 @@ import { AuthorProvider } from "./authors/AuthorProvider"
 import { PostSearch } from "./Posts/PostSearch"
 
 
+
 export const ApplicationViews = () => {
     return <>
         <main style={{
@@ -31,6 +32,7 @@ export const ApplicationViews = () => {
                             <TagProvider>
                                 <CommentProvider>
                                     <Route exact path="/MyPosts">
+                                        <PostSearch />
                                         <MyPostList />
                                     </Route>
                                     <Route exact path="/posts/create">
@@ -40,6 +42,7 @@ export const ApplicationViews = () => {
                                         <PostDetails />
                                     </Route>
                                     <Route exact path="/allposts">
+                                        <PostSearch />
                                         <PostList />
                                     </Route>
                                     <Route exact path="/posts/edit/:postId(\d+)">
