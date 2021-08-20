@@ -18,7 +18,7 @@ export const MyPostList = props => {
       useEffect(() => {
         if (searchTerms !== "") {
           const subset = posts.filter(post => post.title.toLowerCase().includes(searchTerms))
-          setFiltered(subset)
+          setFiltered(subset.filter(post => post.user.username === currentUsername))
         }
         else {
           let filter = posts.filter(post => post.user.username === currentUsername)

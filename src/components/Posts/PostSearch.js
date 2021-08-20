@@ -7,23 +7,15 @@ export const PostSearch = () => {
     const { posts, getPosts, setSearchTerms } = useContext(PostContext);
     const [ searchResults, setSearchResults] = useState([]);
 
-
-    useEffect(() => {
-        getPosts()
-    }, [])
-    
-    const handleChange = (event) => {
-        setSearchTerms(event.target.value)
-
-    }
-
-
     return (
         <>
         <div>
             <h3>Search Posts</h3>
-        <input type="text" onKeyUp={(event) => setSearchTerms(event.target.value)}/>
+        <input type="text" placeholder="Search by title..." onKeyUp={(event) => setSearchTerms(event.target.value)}/>
       </div>
+      <br/>
+      <br/>
+      <br/>
         </>
     )
 }
