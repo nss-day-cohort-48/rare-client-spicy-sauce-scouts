@@ -3,8 +3,8 @@ import { PostContext } from "./PostProvider"
 import { Link, useHistory } from "react-router-dom";
 
 export const MyPostList = props => {
-    const {posts, getPosts} = useContext(PostContext)
-    const [filteredPosts, setFilteredPosts] = useState([])
+    const {posts, getPosts, searchTerms} = useContext(PostContext)
+    const [filteredPosts, setFiltered] = useState([])
     const currentUserId = localStorage.getItem("rare_user_id")
     const currentUsername = localStorage.getItem("rare_username")
     const history = useHistory();
@@ -13,10 +13,18 @@ export const MyPostList = props => {
         getPosts()
       }, [])
 
+      
+
       useEffect(() => {
-        let filter = posts.filter(post => post.user.username === currentUsername)
-        setFilteredPosts(filter)
-      }, [posts])
+        if (searchTerms !== "") {
+          const subset = posts.filter(post => post.title.toLowerCase().includes(searchTerms))
+          setFiltered(subset)
+        }
+        else {
+          let filter = posts.filter(post => post.user.username === currentUsername)
+        setFiltered(filter)
+        }
+      },[searchTerms, posts])
         
         
         if (posts.length > 0) {

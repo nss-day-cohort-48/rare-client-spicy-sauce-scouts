@@ -31,6 +31,7 @@ export const ApplicationViews = () => {
 
 
                 <Route exact path="/MyPosts">
+                    <PostSearch />
                     <MyPostList />
                     
                 </Route>
