@@ -9,11 +9,11 @@ import { PostEdit } from "./Posts/EditPost"
 import { CategoryProvider } from "./Categories/CategoryProvider"
 import { TagProvider } from "./Tags/TagProvider"
 import { CommentProvider } from "./Comments/CommentProvider"
-
 import { ProfileProvider } from "./auth/AuthProvider"
 import { AuthorDetails } from "./authors/AuthorDetails"
 import { AuthorList } from "./authors/AuthorList"
 import { AuthorProvider } from "./authors/AuthorProvider"
+import { PostSearch } from "./Posts/PostSearch"
 
 
 export const ApplicationViews = () => {

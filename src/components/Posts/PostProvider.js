@@ -5,6 +5,7 @@ export const PostContext = createContext();
 
 // This component establishes what data can be used.
 export const PostProvider = (props) => {
+	const [searchTerms, setSearchTerms] = useState("");
 	const [posts, setPosts] = useState([]);
 	const [post, setPost] = useState({});
 
@@ -88,6 +89,8 @@ export const PostProvider = (props) => {
 				deletePost,
 				createPost,
 				updatePost,
+				searchTerms,
+				setSearchTerms
 			}}
 		>
 			{props.children}
