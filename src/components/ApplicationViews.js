@@ -12,6 +12,8 @@ import { CommentProvider } from "./Comments/CommentProvider"
 
 import {ProfileProvider} from "./auth/AuthProvider"
 import { PostSearch } from "./Posts/PostSearch"
+// import { FileUpload } from "./Posts/photoUpload"
+
 
 
 export const ApplicationViews = () => {
@@ -31,6 +33,7 @@ export const ApplicationViews = () => {
 
 
                 <Route exact path="/MyPosts">
+                    
                     <PostSearch />
                     <MyPostList />
                     
@@ -47,6 +50,7 @@ export const ApplicationViews = () => {
                 </Route>
                 <Route exact path="/posts/edit/:postId(\d+)">
                     <PostEdit />
+                    
                 </Route>
                         </CommentProvider>
                     </TagProvider>
