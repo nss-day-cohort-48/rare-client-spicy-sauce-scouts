@@ -10,7 +10,7 @@ export const AuthorProvider = (props) => {
 
 	const getAuthorByUserId = (userId) => {
 		return (
-			fetch(`http://localhost:8000/profiles/${userId}`,
+			fetch(`http://localhost:8000/authors/${userId}`,
 			{
 				headers: {
 					Authorization: `Token ${localStorage.getItem("rare_user_id")}`,
@@ -22,7 +22,7 @@ export const AuthorProvider = (props) => {
 
 	const getAuthors = () => {
 		return (
-			fetch(`http://localhost:8000/profiles`,
+			fetch(`http://localhost:8000/authors`,
 			{
 				headers: {
 					Authorization: `Token ${localStorage.getItem("rare_user_id")}`,
