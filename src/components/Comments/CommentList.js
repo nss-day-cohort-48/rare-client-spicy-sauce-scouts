@@ -1,34 +1,32 @@
 import React, { useEffect, useContext } from "react"
 import {CommentContext} from "./CommentProvider"
-// import { ProfileContext } from "../auth/AuthProvider"
 
 export const Comment = ({postid}) => {
-    const { Comments, getComments } = useContext(CommentContext)
-    // const { Users, getUsers } = useContext(ProfileContext)
+    const { Comments, getComments,deleteComment } = useContext(CommentContext)
 
     useEffect(() => {
         getComments()
     }, [])
-    // useEffect(() => {
-    //     getUsers()
-    // }, [])
+
+
+    const DeleteComment = (event) => {
+
+        deleteComment(event);
+      };
 
     return (<>
             {
                 
                 Comments.map(Cmt => {
-                    if (postid === Cmt.post){
-                        // let userid = ""
-                        // for (const user of Users) {
-                        //     if (user.id === Cmt.author_id) {
-                        //         userid = user.first_name
-                        //     }
-                        // }
+                    if (postid === Cmt.post.id){
+
                         return(
-                                <section className="Comment__info">
-                                <div>1: {Cmt.content}</div>
+                                <section className="Comment__info" key={Cmt.id}>
+                                <div>{Cmt.author.first_name} {Cmt.author.last_name}: "{Cmt.content}" {Cmt.created_on}</div>                             
+                                
                                 </section>
                         )}
+                        
 
                 })
             }

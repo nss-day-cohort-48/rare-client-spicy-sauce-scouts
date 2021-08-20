@@ -3,6 +3,8 @@ import { PostContext } from "./PostProvider";
 import { useHistory, Link } from "react-router-dom";
 import {Comment} from "../Comments/CommentList"
 import {CreateComment} from "../Comments/CreateComment"
+import "./Post.css"
+
 
 export const PostList = (props) => {
 	const { posts, getPosts, searchTerms } = useContext(PostContext);
@@ -67,9 +69,9 @@ export const PostList = (props) => {
 			>
 				Create Post
 			</button>
-			<div>
-				<h1>Posts</h1>
-				{filteredPosts?.map((post) => {
+			<h1>Posts</h1>
+			<div className="Section__Post">
+				{filteredPostsByDate?.map((post) => {
 					return (
 						<>
 							<article className="flex">
